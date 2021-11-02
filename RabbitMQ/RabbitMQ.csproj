@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Title>RabbitMQ</Title>
+        <PackageId>RabbitMQ</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Grigorev Yakov</Authors>
+        <Copyright>Copyright (c) 2021 Grigorev Yakov</Copyright>
+        <PackageProjectUrl>https://github.com/ITIS-MICROSERVICES-2021/RabbitMQ</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/ITIS-MICROSERVICES-2021/RabbitMQ</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>RabbitMQ</PackageTags>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageVersion>1.0.0</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath="" />
+        <None Include="../README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+    
+</Project>
