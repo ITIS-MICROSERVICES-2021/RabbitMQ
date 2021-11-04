@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client.Events;
 
 namespace RabbitMQ.Services
@@ -11,7 +12,7 @@ namespace RabbitMQ.Services
         /// <summary>
         /// Method <c>Publish</c> publishes a message to an exchange
         /// </summary>
-        /// <param name="message">Message</param>
+        /// <param name="message">Message that is sent</param>
         /// <param name="exchange">Entity where message is sent to</param>
         /// <param name="routingKey">Route to zero or more queues</param>
         /// <typeparam name="T">Message type</typeparam>
@@ -20,9 +21,11 @@ namespace RabbitMQ.Services
         /// <summary>
         /// Method <c>Subscribe</c> sets up a subscription to receive messages
         /// </summary>
-        /// <param name="eventHandler">Handler that is raised when message is received</param>
+        /// <param name="action">Handler of received message</param>
         /// <param name="exchange">Entity where message is sent to</param>
         /// <param name="routingKey">Route to zero or more queues</param>
-        public void Subscribe(EventHandler<BasicDeliverEventArgs> eventHandler, string exchange, string routingKey);
+        /// <param name="logger">Logger</param>
+        /// <typeparam name="T">Message type</typeparam>
+        public void Subscribe<T>(Action<T> action, string exchange, string routingKey, ILogger logger);
     }
 }

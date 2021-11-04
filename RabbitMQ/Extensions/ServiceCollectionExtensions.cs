@@ -10,10 +10,17 @@ namespace RabbitMQ.Extensions
         /// <summary>
         /// Adds a RabbitMQService to a dependency injection
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="uri">Uri that is used to connect to a RabbitMQ node in "amqp://user:pass@hostName:port/vhost format"</param>
-        public static void AddRabbitMQ(this IServiceCollection services, Uri uri)
+        /// <param name="services">Services</param>
+        /// <param name="user">Authentication parameter username</param>
+        /// <param name="pass">Authentication parameter password</param>
+        /// <param name="hostName">Host address</param>
+        /// <param name="port">5672 for regular ("plain TCP") connections,
+        /// 5671 for connections with TLS enabled</param>
+        /// <param name="vhost">The namespace for exchanges and queues</param>
+        public static void AddRabbitMQ(this IServiceCollection services, string user, string pass, string hostName,
+            int port, string vhost)
         {
+            var uri = new Uri($"amqp://{user}:{pass}@{hostName}:{port}/{vhost}");
             services.AddSingleton<IRabbitMQService>(new RabbitMQService(uri));
         }
     }

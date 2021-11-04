@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -32,8 +33,8 @@ namespace RabbitMQ.Services
             channel.BasicPublish(exchange, routingKey, null, body);
         }
 
-        /// <inheritdoc cref="IRabbitMQService.Subscribe"/>
-        public void Subscribe(EventHandler<BasicDeliverEventArgs> eventHandler, string exchange, string routingKey)
+        /// <inheritdoc cref="IRabbitMQService.Subscribe{T}"/>
+        public void Subscribe<T>(Action<T> action, string exchange, string routingKey, ILogger logger)
         {
             using var connection = ConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
@@ -41,7 +42,20 @@ namespace RabbitMQ.Services
             var queueName = channel.QueueDeclare().QueueName;
             channel.QueueBind(queueName, exchange, routingKey);
             var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += eventHandler;
+            consumer.Received += (_, args) =>
+            {
+                var body = args.Body.ToArray();
+                try
+                {
+                    var message = JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(body));
+                    action(message);
+                }
+                catch (JsonException e)
+                {
+                    logger.LogError(e, e.Message);
+                    throw;
+                }
+            };
             channel.BasicConsume(queueName, true, consumer);
         }
     }
