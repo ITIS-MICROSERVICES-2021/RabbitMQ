@@ -33,9 +33,12 @@ namespace RabbitMQ.Services
             channel.BasicPublish(exchange, routingKey, null, body);
         }
 
+        /// <exception cref="ArgumentNullException">Exception that is thrown when logger is null</exception>
         /// <inheritdoc cref="IRabbitMQService.Subscribe{T}"/>
         public void Subscribe<T>(Action<T> action, string exchange, string routingKey, ILogger logger)
         {
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger), "Logger can not be null");
             using var connection = ConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
             channel.ExchangeDeclare(exchange, ExchangeType.Direct);
