@@ -4,7 +4,7 @@
         <TargetFramework>net5.0</TargetFramework>
         <Title>RabbitMQ.DI</Title>
         <PackageId>RabbitMQ.DI</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <Authors>Grigorev Yakov</Authors>
         <Copyright>Copyright (c) 2021 Grigorev Yakov</Copyright>
         <PackageProjectUrl>https://github.com/ITIS-MICROSERVICES-2021/RabbitMQ</PackageProjectUrl>
@@ -13,7 +13,7 @@
         <PackageTags>RabbitMQ.DI</PackageTags>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

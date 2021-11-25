@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client.Events;
 
@@ -27,5 +28,15 @@ namespace RabbitMQ.Services
         /// <param name="logger">Logger</param>
         /// <typeparam name="T">Message type</typeparam>
         public void Subscribe<T>(Action<T> action, string exchange, string routingKey, ILogger logger);
+
+        /// <summary>
+        /// Method <c>Subscribe</c> sets up a subscription to receive messages
+        /// </summary>
+        /// <param name="func">AsyncHandler of received message</param>
+        /// <param name="exchange">Entity where message is sent to</param>
+        /// <param name="routingKey">Route to zero or more queues</param>
+        /// <param name="logger">Logger</param>
+        /// <typeparam name="T">Message type</typeparam>
+        public void Subscribe<T>(Func<T, Task> func, string exchange, string routingKey, ILogger logger);
     }
 }
