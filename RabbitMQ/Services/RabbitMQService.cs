@@ -34,7 +34,7 @@ namespace RabbitMQ.Services
         /// <inheritdoc cref="IRabbitMQService.Publish{T}"/>
         public void Publish<T>(T message, string exchange, string routingKey) where T : new()
         {
-            Channel.ExchangeDeclare(exchange, ExchangeType.Direct);
+            Channel.ExchangeDeclare(exchange, ExchangeType.Direct, false, true);
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
             Channel.BasicPublish(exchange, routingKey, null, body);
         }
@@ -47,7 +47,7 @@ namespace RabbitMQ.Services
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger), "Logger can not be null");
-            Channel.ExchangeDeclare(exchange, ExchangeType.Direct);
+            Channel.ExchangeDeclare(exchange, ExchangeType.Direct, false, true);
             Channel.QueueDeclare(routingKey);
             Channel.QueueBind(routingKey, exchange, routingKey);
             var consumer = new EventingBasicConsumer(Channel);
@@ -76,7 +76,7 @@ namespace RabbitMQ.Services
         {
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger), "Logger can not be null");
-            Channel.ExchangeDeclare(exchange, ExchangeType.Direct);
+            Channel.ExchangeDeclare(exchange, ExchangeType.Direct, false, true);
             Channel.QueueDeclare(routingKey);
             Channel.QueueBind(routingKey, exchange, routingKey);
             var consumer = new AsyncEventingBasicConsumer(Channel);
